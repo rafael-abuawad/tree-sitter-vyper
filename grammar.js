@@ -252,6 +252,8 @@ module.exports = grammar({
       $.struct_definition,
       $.interface_definition,
       $.enum_definition,
+      $.flag_definition,
+      $.error_definition,
     ),
 
     if_statement: $ => seq(
@@ -410,6 +412,20 @@ module.exports = grammar({
         ),
       ),
       $._dedent,
+    ),
+
+    flag_definition: $ => seq(
+      'flag',
+      field('name', $.identifier),
+      ':',
+      field('members', $.enum_members),
+    ),
+
+    error_definition: $ => seq(
+      'error',
+      field('name', $.identifier),
+      ':',
+      field('body', $._suite),
     ),
 
     parenthesized_list_splat: $ => prec(PREC.parenthesized_list_splat, seq(
@@ -652,8 +668,16 @@ module.exports = grammar({
       $.lambda,
       $.primary_expression,
       $.conditional_expression,
+      $.named_expression,
       $.as_pattern,
     ),
+
+    // `initializes: ownable_2step[ownable := ownable]`
+    named_expression: $ => prec(PREC.call, seq(
+      field('name', $.identifier),
+      ':=',
+      field('value', $.expression),
+    )),
 
     primary_expression: $ => choice(
       $.binary_operator,
