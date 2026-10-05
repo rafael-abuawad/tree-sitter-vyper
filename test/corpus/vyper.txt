@@ -142,3 +142,29 @@ enum Roles:
       (ERROR
         (identifier))
       (identifier))))
+
+================
+Typed for loop
+================
+
+def f():
+    for i: uint256 in range(3):
+        pass
+
+---
+
+(module
+  (function_definition
+    (identifier)
+    (parameters)
+    (block
+      (for_statement
+        (typed_parameter
+          (identifier)
+          (identifier))
+        (call
+          (identifier)
+          (argument_list
+            (integer)))
+        (block
+          (pass_statement))))))

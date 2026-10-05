@@ -752,8 +752,22 @@
           "type": "FIELD",
           "name": "left",
           "content": {
-            "type": "SYMBOL",
-            "name": "_left_hand_side"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "for_typed_target"
+                },
+                "named": true,
+                "value": "typed_parameter"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_left_hand_side"
+              }
+            ]
           }
         },
         {
@@ -797,6 +811,40 @@
           }
         }
       ]
+    },
+    "for_typed_target": {
+      "type": "PREC",
+      "value": 22,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          {
+            "type": "STRING",
+            "value": ":"
+          },
+          {
+            "type": "FIELD",
+            "name": "type",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "generic_type"
+                }
+              ]
+            }
+          }
+        ]
+      }
     },
     "while_statement": {
       "type": "SEQ",
